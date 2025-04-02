@@ -1,0 +1,73 @@
+.dashboard_container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 20%;
+  padding: 0px 10px;
+  margin-right: 5px;
+  float: left;
+  height: 100vh;
+  border-right: 1px solid gray;
+}
+
+.sidebar > ul {
+  list-style-type: none;
+}
+
+.button {
+  text-align: left;
+  width: 100%;
+}
+
+.main {
+  float: right;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome_section {
+  display: flex;
+  height: 30vh;
+  padding: 20px;
+  border-bottom: 1px solid gray;
+}
+.welcome,
+.streak {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.welcome{
+    padding: 2rem 0rem;
+    border-right: 1px solid gray;
+}
+.streak {
+  justify-content: center;
+  align-items: center;
+}
+
+.days {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.days > li > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+
+.analytics_section{
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0rem;
+}

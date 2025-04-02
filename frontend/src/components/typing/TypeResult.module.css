@@ -1,0 +1,165 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+.container{
+    font-family: 'Noto Sans Mono', monospace, serif;
+    max-width: 1360px;
+    margin: 5px;
+    padding: 30px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
+    box-shadow: 0 0 6px rgba(0,0,0,0.25);
+
+}
+
+strong.green{
+    color: black;
+    border: none;
+    border-radius: 10%;
+    color: rgba(23, 246, 42, 0.5);
+}
+strong.red{
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius:10%;
+    background: rgba(246, 35, 35, 0.5);
+}
+
+.test{
+    user-select: none; 
+    text-align:justify;
+    word-spacing:-5px;
+    text-indent: 2rem;
+}
+
+input.inputField{
+    opacity: 0;  /*opacity: 1*/
+    z-index: 1;  /*z-index: -999*/
+    position: absolute;
+    pointer-events: none;
+    /* Prevents the input from blocking clicks on the paragraph */
+} 
+
+span{
+    font-size: 20px;
+    user-select: none;
+    cursor: text;
+}
+
+span.active{
+    border-bottom: 3px solid rgb(248, 46, 6);
+}
+
+
+span.correct{
+    background: var(--rightBackground);
+    color: var(--rightColor);
+}
+
+span.wrong{
+    background: var(--wrongBackground);
+    color: var(--wrongColor);
+}
+
+.result{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid rgb(106,106,104);
+}
+
+.popup {
+    font-family: 'Noto Sans Mono', monospace, serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    box-sizing: border-box;
+    box-shadow: 0 0 6px rgba(0,0,0,0.25);
+    border-radius: 10px;
+    max-width: 500px;
+    width: 500px;
+}
+.para{
+    padding: 20px;
+    font-size: 2rem;
+}
+
+.parag{
+    display: inline;
+}
+
+.e{
+    color: rgb(60, 253, 60);
+}
+.g{
+    color: rgb(19, 233, 248);
+}
+.f{
+    color: rgb(204, 239, 52);
+}
+
+
+.last{
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: inherit;
+    align-items: center;
+}
+
+.last1{
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    width: inherit;
+}
+
+@media screen and (max-width:480px) {
+    span{
+        font-size: 14px;
+    }
+    .container{
+        font-size: 15px;
+    }
+
+    .popup {
+        padding: 25px;
+        width: 300px;
+    }
+    .para{
+        font-size: 14px;
+    }
+    .test {
+        overflow-y: auto; /*added for scrolling*/
+        max-height: 60vh; 
+      }
+    
+      .test span.active {
+        scroll-margin-top: 100px; /* Ensure the active character is not at the very top */
+      }
+       
+}
+
+.rating span {
+    position: relative;
+    display: flex;
+    font-weight: bold;
+    z-index: 2;
+  }
+  
+  .rating span small {
+    font-size: 0.5em;
+    font-weight: 900;
+    align-self: center;
+  }
+
