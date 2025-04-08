@@ -1,10 +1,11 @@
 import styles from "./Result.module.css";
 import { useContext } from "react";
-import { PracticeState } from "./PracticeLogic";
+import { PracticeState } from "../practice/PracticeLogic";
 import { Gauge, gaugeClasses } from "@mui/x-charts";
 import { Box, Button, Typography } from "@mui/material";
 import CustomButton from "../ui/CustomButton";
 import { useNavigate } from "react-router-dom";
+import CustomGauge from "../ui/CustomGauge";
 
 const Result: React.FC = () => {
   const context = useContext(PracticeState);
@@ -16,35 +17,11 @@ const Result: React.FC = () => {
   }
   return (
     <>
-      {minutes === 0 && seconds === 0 && (
+      {/* {minutes === 0 && seconds === 0 && ( */}
         <div className={styles.container}>
           <div className={styles.box}>
             <div>
-              <Box position="relative" display="inline-block">
-                <Gauge
-                  cornerRadius="50%"
-                  width={150}
-                  height={150}
-                  value={Math.round(accuracy)}
-                  sx={{
-                    [`& .${gaugeClasses.valueArc}`]: { fill: "#52b202" },
-                    [`& .${gaugeClasses.referenceArc}`]: { fill: "gray" },
-                  }}
-                />
-                {/* Overlay the text */}
-                <Typography
-                  variant="h4"
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)", // Center the text
-                    fontWeight: "bold",
-                  }}
-                >
-                  {Math.round(accuracy)}
-                </Typography>
-              </Box>
+              <CustomGauge value={accuracy} />
               <h2>Accuracy</h2>
             </div>
             <div className={styles.feedback}>
@@ -69,7 +46,7 @@ const Result: React.FC = () => {
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };

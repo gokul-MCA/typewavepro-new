@@ -23,7 +23,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { HeartIcon, ShuffleIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import CustomButton from "../ui/CustomButton";
 
 const SidebarMenu = [
@@ -59,100 +59,103 @@ const Dashboard = () => {
   };
 
   return (
-    <div className={styles.dashboard_container}>
-      <aside
-        className={styles.sidebar}
-        style={{
-          width: hideSidebar ? "40px" : "300px",
-          transition: "width 0.3 ease",
-        }}
-      >
-        <IconButton
-          sx={{
-            width: "100%",
-            display: "inline",
-            textAlign: "left",
-            paddingTop: "20px",
+    <>
+      <div className={styles.dashboard_container}>
+        <aside
+          className={styles.sidebar}
+          style={{
+            width: hideSidebar ? "40px" : "300px",
+            transition: "width 0.3 ease",
           }}
-          onClick={handleSidebar}
         >
-          {/* <Tooltip title="Menu" placement="right"> */}
-          {hideSidebar ? (
-            <MenuOpenIcon style={{ color: "var(--secondary-color)" }} />
-          ) : (
-            <MenuIcon style={{ color: "var(--secondary-color)" }} />
-          )}
-          {/* </Tooltip> */}
-        </IconButton>
-
-        {SidebarMenu.map(({ title, icon: IconComponent }) => (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: hideSidebar ? "flex-start" : "center",
+          <IconButton
+            sx={{
+              width: "100%",
+              display: "inline",
+              textAlign: "left",
+              paddingTop: "20px",
             }}
-            key={title}
+            onClick={handleSidebar}
           >
+            {/* <Tooltip title="Menu" placement="right"> */}
             {hideSidebar ? (
-              <Tooltip title={title} placement="right">
-                <IconButton>
-                  <IconComponent style={{ color: "red" }} />
-                </IconButton>
-              </Tooltip>
+              <MenuOpenIcon style={{ color: "var(--secondary-color)" }} />
             ) : (
-              <>
-                <IconButton>
-                  <IconComponent style={{ color: "red" }} />
-                </IconButton>
-                <CustomButton
-                  label={title}
-                  variant="outlined"
-                  sx={{
-                    padding: {
-                      xs: "4px 2px", // Smaller padding on extra-small screens
-                      sm: "6px 2px", // Medium padding on small screens
-                      md: "8px 2px", // Larger padding on medium screens and up
-                    },
-                    width: "100%",
-                    textAlign: "left",
-                    border: "none",
-                    display: hideSidebar ? "none" : "block",
-                  }}
-                />
-              </>
+              <MenuIcon style={{ color: "var(--secondary-color)" }} />
             )}
+            {/* </Tooltip> */}
+          </IconButton>
+
+          {SidebarMenu.map(({ title, icon: IconComponent }) => (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: hideSidebar ? "flex-start" : "center",
+              }}
+              key={title}
+            >
+              {hideSidebar ? (
+                <Tooltip title={title} placement="right">
+                  <IconButton>
+                    <IconComponent style={{ color: "red" }} />
+                  </IconButton>
+                </Tooltip>
+              ) : (
+                <>
+                  <IconButton>
+                    <IconComponent style={{ color: "red" }} />
+                  </IconButton>
+                  <CustomButton
+                    label={title}
+                    variant="outlined"
+                    sx={{
+                      padding: {
+                        xs: "4px 2px", // Smaller padding on extra-small screens
+                        sm: "6px 2px", // Medium padding on small screens
+                        md: "8px 2px", // Larger padding on medium screens and up
+                      },
+                      width: "100%",
+                      textAlign: "left",
+                      border: "none",
+                      display: hideSidebar ? "none" : "block",
+                    }}
+                  />
+                </>
+              )}
+            </div>
+          ))}
+        </aside>
+        <div className={styles.main}>
+          <div className={styles.welcome_section}>
+            <div className={styles.welcome}>
+              <p>Welcome Back!</p>
+              <h1>Gokul</h1>
+            </div>
+            <div className={styles.streak}>
+              <h2>Streak</h2>
+              <p>Current Streak:</p>
+              <h3>1 days</h3>
+              <ul className={styles.days}>
+                {days.map((day, index) => (
+                  <li key={index}>
+                    <div>
+                      <HeartIcon />
+                      {day}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        ))}
-      </aside>
-      <div className={styles.main}>
-        <div className={styles.welcome_section}>
-          <div className={styles.welcome}>
-            <p>Welcome Back!</p>
-            <h1>Gokul</h1>
+          <div className={styles.analytics_section}>
+            <SelectContent />
+            {/* <Outlet /> */}
+            <div className={styles.analytics}></div>
           </div>
-          <div className={styles.streak}>
-            <h2>Streak</h2>
-            <p>Current Streak:</p>
-            <h3>1 days</h3>
-            <ul className={styles.days}>
-              {days.map((day, index) => (
-                <li key={index}>
-                  <div>
-                    <HeartIcon />
-                    {day}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        <div className={styles.analytics_section}>
-          <SelectContent />
-          <div className={styles.analytics}></div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
@@ -173,8 +176,10 @@ const SelectContent: React.FC = () => {
 
   const handleOkay = () => {
     if (selectedContent) {
+      const sessionId = `session-${Date.now()}`; // or use uuid if you prefer
+      navigate(`${selectedContent}/${sessionId}`);
       // navigate to a page based on the selected content (for example, dynamic/static content page)
-      navigate(`${selectedContent.toLowerCase()}`);
+      // navigate(`${selectedContent}`);
     } else {
       alert("Please select a content type before proceeding.");
     }
@@ -223,12 +228,7 @@ const SelectContent: React.FC = () => {
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-          <Button
-            autoFocus
-            onClick={handleOkay}
-            disabled={!selectedContent}
-            color="info"
-          >
+          <Button onClick={handleOkay} disabled={!selectedContent} color="info">
             Okay
           </Button>
           <Button onClick={handleClose} color="error">

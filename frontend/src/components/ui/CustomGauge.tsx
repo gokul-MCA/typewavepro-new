@@ -5,19 +5,20 @@ import React from "react";
 
 interface CustomGaugeProps {
   value: number;
+  valueMax?: number;
   sx?: SxProps<Theme>;
 }
 
-const CustomGauge: React.FC<CustomGaugeProps> = ({ value, sx }) => {
+const CustomGauge: React.FC<CustomGaugeProps> = ({ value, valueMax, sx }) => {
   return (
     <>
       <Box position="relative" display="inline-block">
-        <CustomGauge value={value} />
         <Gauge
           cornerRadius="50%"
           width={150}
           height={150}
           value={Math.round(value)}
+          valueMax={valueMax || 100}
           sx={{
             [`& .${gaugeClasses.valueArc}`]: { fill: "#52b202" },
             [`& .${gaugeClasses.referenceArc}`]: { fill: "gray" },

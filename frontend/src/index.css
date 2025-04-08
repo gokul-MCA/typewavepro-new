@@ -19,3 +19,8 @@ body {
     --primary-color: #ff1e56;
     --secondary-color: #0d68fb;
 } 
+
+*{
+    padding: 0px;
+    margin: 0px;
+}

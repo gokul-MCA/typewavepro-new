@@ -15,8 +15,34 @@
 
 .box1 {
   flex-direction: column;
-  /* justify-content: flex-start; */
-  /* align-items: flex-start; */
+}
+
+.heading {
+  font-size: 30px;
+  margin-bottom: 20px;
+  letter-spacing: .1rem;
+}
+
+.heading::first-letter {
+  font-size: 50px;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.heading2{
+  font-size: 60px;
+  width: 700px;
+}
+
+.paragraph {
+  font-size: larger;
+  margin: 40px 0;
+  width: 700px;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  padding: 10px 0;
 }
 
 .type {
@@ -46,33 +72,3 @@
   font-size: 50px;
   font-weight: 900;
 }
-
-.heading {
-  font-size: 30px;
-  margin-bottom: 20px;
-  letter-spacing: .1rem;
-}
-
-.heading2{
-  font-size: 60px;
-  width: 700px;
-}
-
-.heading::first-letter {
-  font-size: 50px;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-.paragraph {
-  font-size: larger;
-  margin: 40px 0;
-  width: 700px;
-}
-
-.buttons {
-  display: flex;
-  gap: 20px;
-  padding: 10px 0;
-}
-
-/* .box2{} */

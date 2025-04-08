@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from "react";
+import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Home from "./pages/Home.jsx";
-import Test from "./pages/Test.jsx";
-import "./App.css";
-import New from "./pages/New.tsx";
-import Practice from "./components/practice/Practice.tsx";
+
+import HomeLayout from "./layout/HomeLayout.tsx";
+import Home from "./pages/home/Home.tsx";
+import DynamicContentPage from "./pages/dynamic-content/DynamicContentPage.tsx";
+
 import PracticeLogic from "./components/practice/PracticeLogic.tsx";
-import Result from "./components/practice/Result.tsx";
+import Practice from "./components/practice/Practice.tsx";
+import LoginPractice from "./components/practice/LoginPractice.tsx";
+import SearchInput from "./components/practice/SearchInput.tsx";
+import PracticeSessionWrapper from "./components/practice/PracticeSessionWrapper.tsx";
+
+import Result from "./components/result/Result.tsx";
+import LoginResult from "./components/result/LoginResult.tsx";
 import Dashboard from "./components/dashboard/Dashboard.tsx";
 import { blue, grey, pink } from "@mui/material/colors";
 
@@ -73,19 +80,32 @@ const App = () => {
         <ThemeProvider theme={darkTheme}>
           <BrowserRouter>
             <Routes>
-              <Route index element={<New />} />
               <Route path="*" element={<NoFound />} />
 
+              <Route path="/" element={<HomeLayout />}>
+                <Route index element={<Home />} />
+              </Route>
+
+              {/* Practice Routes */}
               <Route path="/practice" element={<PracticeLogic />}>
-                <Route index element={<Practice />} />
-                <Route path="result" element={<Result />} />
+                  <Route index element={<Practice />} />
+                  <Route path="result" element={<Result />} />
               </Route>
 
-              <Route path="/dashboard" element={<Dashboard/> }>
-                <Route path="static-content-practice" element={<Result />} />
-                <Route path="dynamic-content-practice" element={<Result />} />
-
-              </Route>
+                {/* Dashboard Routes */}
+                <Route path="/dashboard">
+                  <Route index element={<Dashboard />} />
+                  <Route path="static-content-practice/:sessionId" element={<PracticeSessionWrapper />}>
+                    <Route index element={<LoginPractice />} />
+                    <Route path="result" element={<LoginResult />} />
+                  </Route>
+                  <Route path="dynamic-content-practice/:sessionId" element={<PracticeSessionWrapper />}>
+                    <Route index element={<DynamicContentPage/>} />
+                    {/* <Route index element={<SearchInput />} /> */}
+                    {/* <Route path="practice" element={<LoginPractice />} /> */}
+                    <Route path="result" element={<LoginResult />} />
+                  </Route>
+                </Route>
             </Routes>
           </BrowserRouter>
         </ThemeProvider>

@@ -22,6 +22,7 @@ interface PracticeContextType {
   charRefs: React.RefObject<HTMLSpanElement[]>;
   correctWrongStyle: string[];
   typingContent: string;
+  setTypingContent: React.Dispatch<React.SetStateAction<string>>;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   handleClick: (index: number) => void;
@@ -37,7 +38,7 @@ interface PractiseLogicProps {
   children: ReactNode;
 }
 
-const PracticeLogic: React.FC<PractiseLogicProps> = ({ children }) => {
+const PracticeLogic: React.FC<PractiseLogicProps> = () => {
   const [time, setTime] = useState<number>(120);
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [minutes, setMinutes] = useState<number>(Math.floor(time / 60));
@@ -50,7 +51,7 @@ const PracticeLogic: React.FC<PractiseLogicProps> = ({ children }) => {
   const [WPM, setWPM] = useState<number>(0);
   const [CPM, setCPM] = useState<number>(0);
   const [mistakes, setMistakes] = useState<number>(0);
-  const [accuracy, setAccuracy] = useState<number>(100);
+  const [accuracy, setAccuracy] = useState<number>(0);
   const [correctWrongStyle, setCorrectWrongStyle] = useState<string[]>([]);
 
   // Data for typing practice
@@ -63,7 +64,7 @@ const PracticeLogic: React.FC<PractiseLogicProps> = ({ children }) => {
   useEffect(() => {
     inputRef.current?.focus(); // Optional chaining to avoid null ref error
     const randomContent = getRandomTypingContent();
-    setTypingContent(randomContent.content);
+    setTypingContent(typingContent || randomContent.content);
   }, [shuffleReset]);
 
   // Update minutes and seconds when resetTrigger changes
@@ -182,6 +183,7 @@ const PracticeLogic: React.FC<PractiseLogicProps> = ({ children }) => {
           charRefs,
           correctWrongStyle,
           typingContent,
+          setTypingContent,
           handleChange,
           handleKeyDown,
           handleClick,
@@ -189,11 +191,25 @@ const PracticeLogic: React.FC<PractiseLogicProps> = ({ children }) => {
           restartFunc,
         }}
       >
-        {children}
-      <Outlet />
+        <Outlet />
       </PracticeState.Provider>
     </>
   );
 };
 
 export default PracticeLogic;
+
+
+// You used only <Outlet /> in PracticeLogic, but it still worked — why?
+// Because React Router maintains an internal outlet context tree, and
+// if <PracticeLogic> is rendered as part of a route tree, it knows to inject the correct child route into the <Outlet />.
+// if you need manually pass a children only u need Children
+// const PracticeLogic = ({ children }: PractiseLogicProps) => {
+//   const hasChildren = !!children;
+
+//   return (
+//     <PracticeState.Provider value={/* context */}>
+//       {hasChildren ? children : <Outlet />}
+//     </PracticeState.Provider>
+//   );
+// };

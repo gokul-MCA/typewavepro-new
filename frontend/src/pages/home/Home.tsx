@@ -1,7 +1,6 @@
-import { Button } from "@mui/material";
+import CustomButton from "../../components/ui/CustomButton";
 import styles from "./Home.module.css";
 import { useNavigate } from "react-router-dom";
-import CustomButton from "../ui/CustomButton";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();

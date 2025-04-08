@@ -7,7 +7,7 @@ import { PracticeState } from "./PracticeLogic";
 import { redirect, useNavigate } from "react-router-dom";
 import CustomButton from "../ui/CustomButton";
 
-const Practice: React.FC = () => {
+const LoginPractice: React.FC = () => {
   const navigate = useNavigate();
   const context = useContext(PracticeState);
   if (!context) throw new Error("Practice must be used within a PracticeLogic");
@@ -33,8 +33,12 @@ const Practice: React.FC = () => {
     }
   }, [minutes, seconds]);
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+  
   const handleNavigation = () => {
-    navigate("/");
+    navigate("/dashboard");
   };
 
   // variables for condition based styles
@@ -42,6 +46,7 @@ const Practice: React.FC = () => {
   const mistakeStyles = mistakes > 20 && styles.red;
   return (
     <div className={styles.container}>
+      
       <div className={styles.back_button}>
         <CustomButton
           label="Back"
@@ -91,11 +96,6 @@ const Practice: React.FC = () => {
 
         {/* shuffle and restart button section  */}
         <div className={styles.actions_tryAnother_restart}>
-          <Tooltip title="Shuffle">
-            <IconButton onClick={shuffleResetFunc}>
-              <ShuffleIcon style={{ color: "var(--primary-color)" }} />
-            </IconButton>
-          </Tooltip>
           <Tooltip title="Restart">
             <IconButton onClick={restartFunc}>
               <RefreshIcon style={{ color: "var(--secondary-color)" }} />
@@ -107,4 +107,4 @@ const Practice: React.FC = () => {
   );
 };
 
-export default Practice;
+export default LoginPractice;
