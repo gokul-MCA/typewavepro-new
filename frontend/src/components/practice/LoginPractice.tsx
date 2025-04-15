@@ -1,14 +1,16 @@
 import styles from "./Practice.module.css";
-import ShuffleIcon from "@mui/icons-material/Shuffle";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { Button, Divider, IconButton, Tooltip } from "@mui/material";
+import { Divider, IconButton, Tooltip } from "@mui/material";
 import { useContext, useEffect, useRef, useState } from "react";
 import { PracticeState } from "./PracticeLogic";
-import { redirect, useNavigate } from "react-router-dom";
+import { redirect, useLocation, useNavigate } from "react-router-dom";
 import CustomButton from "../ui/CustomButton";
+import SearchInput from "./SearchInput";
 
 const LoginPractice: React.FC = () => {
+  const [ showSearchInput, setShowSearchInput ] = useState(false);
   const navigate = useNavigate();
+  let location = useLocation();
   const context = useContext(PracticeState);
   if (!context) throw new Error("Practice must be used within a PracticeLogic");
   const {
@@ -36,7 +38,11 @@ const LoginPractice: React.FC = () => {
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
-  
+
+  useEffect(() => {
+    setShowSearchInput(location.pathname.includes('dynamic'))
+  }, [location]);
+
   const handleNavigation = () => {
     navigate("/dashboard");
   };
@@ -46,7 +52,6 @@ const LoginPractice: React.FC = () => {
   const mistakeStyles = mistakes > 20 && styles.red;
   return (
     <div className={styles.container}>
-      
       <div className={styles.back_button}>
         <CustomButton
           label="Back"
@@ -54,6 +59,11 @@ const LoginPractice: React.FC = () => {
           onClick={handleNavigation}
         />
       </div>
+      { showSearchInput && 
+        <div className={styles.search_input}>
+        <SearchInput />
+      </div>
+      }
       <div className={styles.box}>
         {/* time left and mistakes section  */}
         <div className={styles.display_timeLeft_mistakes}>

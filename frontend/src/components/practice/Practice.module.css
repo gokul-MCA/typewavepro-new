@@ -87,6 +87,12 @@ span.wrong {
   padding: 40px;
 }
 
+.search_input{
+  position: absolute;
+  top: 50px;
+
+}
+
 .popup {
   font-family: "Noto Sans Mono", monospace, serif;
   display: flex;

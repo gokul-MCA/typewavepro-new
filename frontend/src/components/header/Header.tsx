@@ -7,6 +7,12 @@ import Button from "@mui/material/Button";
 import styles from "./Header.module.css";
 
 function Header() {
+
+  const googleAuth = () => {
+    window.open(`https://localhost:5555/auth/google/callback`,
+      "_self"
+    );
+  }
   return (
     <AppBar position="static">
       <Container maxWidth="xl" sx={{backgroundColor:'black'}}>
@@ -22,7 +28,7 @@ function Header() {
             variant="h4"
             noWrap
             component="a"
-            href="/new"
+            href="/"
             sx={{
               mx: 2,
               display: { xs: "none", md: "flex" },
@@ -56,11 +62,11 @@ function Header() {
           >
             TypeWavePro
           </Typography>
-
           <Button
-            href="/oauth"
+            // href="/sign-in"
             variant="contained"
             sx={{ ml: "auto", textTransform:"none" }}
+            onClick={googleAuth}
           >
             Sign in
           </Button>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import HomeLayout from "./layout/HomeLayout.tsx";
@@ -10,7 +10,6 @@ import DynamicContentPage from "./pages/dynamic-content/DynamicContentPage.tsx";
 import PracticeLogic from "./components/practice/PracticeLogic.tsx";
 import Practice from "./components/practice/Practice.tsx";
 import LoginPractice from "./components/practice/LoginPractice.tsx";
-import SearchInput from "./components/practice/SearchInput.tsx";
 import PracticeSessionWrapper from "./components/practice/PracticeSessionWrapper.tsx";
 
 import Result from "./components/result/Result.tsx";
@@ -20,6 +19,7 @@ import { blue, grey, pink } from "@mui/material/colors";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisited");
@@ -34,6 +34,20 @@ const App = () => {
       setLoading(false);
     }
   }, []);
+
+  const getUser = async() => {
+    try{
+      const url = `${process.env.REACT_APP_API_URL}/auth/login/success`;
+      const {data} = await axios.get(url,{withCredentials:true});
+      setUser(data.user._json);
+    }catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getUser();
+  },[])
 
   function NoFound() {
     return <h2>404 - Page Not Found</h2>;
@@ -95,6 +109,7 @@ const App = () => {
                 {/* Dashboard Routes */}
                 <Route path="/dashboard">
                   <Route index element={<Dashboard />} />
+                  {/* <Route index element={user ? <Dashboard /> : <Navigate to='/login'/>} /> */}
                   <Route path="static-content-practice/:sessionId" element={<PracticeSessionWrapper />}>
                     <Route index element={<LoginPractice />} />
                     <Route path="result" element={<LoginResult />} />
